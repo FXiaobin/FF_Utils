@@ -52,10 +52,11 @@
 + (UIImageView *)createImageViewWithFrame:(CGRect)frame imageName:(NSString *)imageName contentMode:(UIViewContentMode)contentModel{
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
     imageView.userInteractionEnabled = YES;
+    imageView.image = [UIImage imageNamed:imageName];
+    
     if ([imageName hasPrefix:@"http"] || [imageName hasPrefix:@"https"]) {
         [imageView sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:[UIImage imageNamed:@""]];
     }
-    imageView.image = [UIImage imageNamed:imageName];
     imageView.clipsToBounds = YES;
     imageView.contentMode = contentModel;
     
