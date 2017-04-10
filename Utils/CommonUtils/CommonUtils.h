@@ -55,4 +55,14 @@ typedef void(^resultBlock)(id object);
 
 
 
+/// 转场动画
++ (void)transationAnimationForViewWithType:(NSString *)type subType:(NSString *)subType forView:(UIView *)aView;
+
+/// 抖动动画
++ (void)shakeAnimationWithAnimationView:(UIView *)animationView;
+/// 缩放动画
++ (void)scaleAnimationWithAnimationView:(UIView *)animationView;
+/// 旋转动画
++ (void)rotationAnimationWithAnimationView:(UIView *)animationView;
+
 @end
