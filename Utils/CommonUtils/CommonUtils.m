@@ -229,6 +229,91 @@
 
 
 
+/*
+ 转场类型type：
+ 
+ Fade = 1,                   //淡入淡出
+ Push,                       //推挤
+ Reveal,                     //揭开
+ MoveIn,                     //覆盖
+ Cube,                       //立方体
+ SuckEffect,                 //吮吸（水滴）
+ OglFlip,                    //翻转
+ RippleEffect,               //波纹
+ （默认以父类为参照，所以一般我们使用一个和子控件一样大的父控件来修改这个效果）
+ PageCurl,                   //翻页
+ PageUnCurl,                 //反翻页
+ CameraIrisHollowOpen,       //开镜头
+ CameraIrisHollowClose,      //关镜头
+ CurlDown,                   //下翻页
+ CurlUp,                     //上翻页
+ FlipFromLeft,               //左翻转
+ FlipFromRight,              //右翻转
+
+ 转场子类型subtype：
+ 
+ kCAMediaTimingFunctionLinear            线性即匀速
+ kCAMediaTimingFunctionEaseIn            先慢后快
+ kCAMediaTimingFunctionEaseOut           先快后慢
+ kCAMediaTimingFunctionEaseInEaseOut     先慢后快再慢
+ kCAMediaTimingFunctionDefault           实际效果是动画中间比较快
+ 
+ */
+#pragma mark ---  转场动画
++ (void)transationAnimationForViewWithType:(NSString *)type subType:(NSString *)subType forView:(UIView *)aView{
+    
+    CATransition *transtion = [CATransition animation];
+    //[transtion setStartProgress:0.2];
+    //[transtion setEndProgress:0.8];
+    transtion.duration = 1.0;
+    [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [transtion setType:type];
+    
+    //kCATransitionFromTop
+    [transtion setSubtype:subType];
+    
+    [aView.layer addAnimation:transtion forKey:@"transtionKey"];
+}
+
+#pragma mark --- 核心动画
+/// 左右抖动
++ (void)shakeAnimationWithAnimationView:(UIView *)animationView{
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+
+    [animation setDuration:0.1];
+    //抖动角度
+    animation.fromValue = @(-M_1_PI/2);
+    animation.toValue = @(M_1_PI/2);
+    //重复次数，2次
+    animation.repeatCount = 2;
+    //恢复原样
+    animation.autoreverses = YES;
+    //锚点设置为图片中心，绕中心抖动
+    animationView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    
+    [animationView.layer addAnimation:animation forKey:@"rotation"];
+}
+
+/// 点赞放大缩小
++ (void)scaleAnimationWithAnimationView:(UIView *)animationView{
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    animation.values = @[@1.5 ,@0.8, @1.0,@1.2,@1.0];
+    animation.duration = 0.5;
+    animation.calculationMode = kCAAnimationCubic;
+    [animationView.layer addAnimation:animation forKey:@"transform.scale"];
+}
+
++ (void)rotationAnimationWithAnimationView:(UIView *)animationView{
+    
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = @(M_PI*2.0);
+    rotationAnimation.duration = 0.5;
+    rotationAnimation.cumulative = YES;
+    //rotationAnimation.repeatCount = MAXFLOAT;//一直旋转
+    [animationView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
 
 
 @end
