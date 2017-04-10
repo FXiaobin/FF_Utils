@@ -43,16 +43,6 @@ typedef void(^UIViewUtilsResult)(id obj);
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)message targetVC:(UIViewController *)targetVC ensureActionTitle:(NSString *)ensureTitle completeBlock:(UIViewUtilsResult)block isShowCancelAction:(BOOL)isShow;
 
 
-/// 转场动画
-+ (void)transationAnimationForViewWithType:(NSString *)type subType:(NSString *)subType forView:(UIView *)aView;
-
-/// 抖动动画
-+ (void)shakeAnimationWithAnimationView:(UIView *)animationView;
-/// 缩放动画
-+ (void)scaleAnimationWithAnimationView:(UIView *)animationView;
-/// 旋转动画
-+ (void)rotationAnimationWithAnimationView:(UIView *)animationView;
-
 
 
 
